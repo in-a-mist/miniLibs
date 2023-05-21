@@ -1,0 +1,7 @@
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\bin\pluginForGrasshopper.dll
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\bin\pluginForGrasshopper.pdb
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\bin\miniLibs.dll
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\bin\miniLibs.pdb
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\obj\Debug\pluginForGrasshopper.csprojResolveAssemblyReference.cache
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\obj\Debug\pluginForGrasshopper.dll
+C:\Users\U\Desktop\miniLibs\pluginForGrasshopper\obj\Debug\pluginForGrasshopper.pdb
