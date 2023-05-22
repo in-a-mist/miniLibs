@@ -48,6 +48,7 @@
     <Compile Include="PrimitiveModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TouKungData.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
