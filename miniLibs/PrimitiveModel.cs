@@ -3,7 +3,7 @@ using Rhino.Geometry;
 using System.Collections.Generic;
 
 namespace miniLibs
-{
+{ 
     public abstract class TouShape
     {
         protected TouData _dataTou;

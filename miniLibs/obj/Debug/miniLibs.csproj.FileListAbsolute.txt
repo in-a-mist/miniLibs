@@ -1,6 +1,5 @@
 C:\Users\U\Desktop\miniLibs\miniLibs\bin\Debug\miniLibs.dll
 C:\Users\U\Desktop\miniLibs\miniLibs\bin\Debug\miniLibs.pdb
-C:\Users\U\Desktop\miniLibs\miniLibs\bin\Debug\RhinoCommon.dll
 C:\Users\U\Desktop\miniLibs\miniLibs\obj\Debug\miniLibs.csprojResolveAssemblyReference.cache
 C:\Users\U\Desktop\miniLibs\miniLibs\obj\Debug\miniLibs.dll
 C:\Users\U\Desktop\miniLibs\miniLibs\obj\Debug\miniLibs.pdb
