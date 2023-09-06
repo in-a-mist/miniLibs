@@ -1,9 +1,8 @@
 ﻿using System;
 using Rhino.Geometry;
-using System.Collections.Generic;
 
 namespace miniLibs
-{ 
+{
     public abstract class TouShape
     {
         protected TouData _dataTou;
@@ -123,15 +122,19 @@ namespace miniLibs
 
             //斗
             Brep subSolid = new ShanTou(new ShanTouData(_dataKung._rule)).GetShape();
-            subSolid.Translate(5 * _dataKung._rule.UnitValue, 0, _dataKung._rule.SingleSize);
+            if (_dataKung.EndLengthForTou>10*_dataKung._rule.UnitValue)
+            {
+                subSolid.Rotate(Math.PI * 0.5, Vector3d.ZAxis, Point3d.Origin);
+            }
+            subSolid.Translate(0.5*_dataKung.EndLengthForTou, 0, _dataKung._rule.SingleSize);
 
             //卷杀
             Brep srfs = Utils.CreateCutSolid(_dataKung.CutFullLength, _dataKung.CutHeight, _dataKung.CutAmount);
             Brep cutSolid = Brep.CreateFromOffsetFace(srfs.Faces[0], 0.5 * _dataKung.Width, Utils.GetTolerance, true, true);
 
             //栱眼
-            Brep gy1 = Utils.CreateGY(new Point3d(10 * _dataKung._rule.UnitValue, 0.5 * _dataKung.Width, _dataKung._rule.SingleSize), new Point3d(lenghth - 6 * _dataKung._rule.UnitValue, 0.5 * _dataKung.Width, _dataKung._rule.SingleSize), _dataKung._rule.UnitValue, _dataKung._rule.UnitValue);
-            Brep gy2 = Utils.CreateGY(new Point3d(10 * _dataKung._rule.UnitValue, -0.5 * _dataKung.Width, _dataKung._rule.SingleSize), new Point3d(lenghth - 6 * _dataKung._rule.UnitValue, -0.5 * _dataKung.Width, _dataKung._rule.SingleSize), _dataKung._rule.UnitValue, _dataKung._rule.UnitValue);
+            Brep gy1 = Utils.CreateGY(new Point3d(_dataKung.EndLengthForTou, 0.5 * _dataKung.Width, _dataKung._rule.SingleSize), new Point3d(lenghth - 6 * _dataKung._rule.UnitValue, 0.5 * _dataKung.Width, _dataKung._rule.SingleSize), _dataKung._rule.UnitValue, _dataKung._rule.UnitValue);
+            Brep gy2 = Utils.CreateGY(new Point3d(_dataKung.EndLengthForTou, -0.5 * _dataKung.Width, _dataKung._rule.SingleSize), new Point3d(lenghth - 6 * _dataKung._rule.UnitValue, -0.5 * _dataKung.Width, _dataKung._rule.SingleSize), _dataKung._rule.UnitValue, _dataKung._rule.UnitValue);
 
 
             //开始减操作：挖出栱眼-->下端头卷杀-->上端头留出置斗处
@@ -173,6 +176,7 @@ namespace miniLibs
     {
         public HuaKung(KungData dataKung) : base(dataKung)
         {
+            
         }
 
         public override Brep GetShape()
@@ -250,56 +254,6 @@ namespace miniLibs
             Brep resultSolid = new NiTaoKung(_dataKung).GetShape();
 
             return resultSolid;
-        }
-    }
-
-    public class Column
-    {
-        public ICalculatorRule _rule;
-        private double _diameter;
-        private double _height;
-
-        public Column(ICalculatorRule rule, double diameter,double height)
-        {
-            _rule = rule;
-            _height = height;
-            _diameter = diameter;
-        }
-        public Brep GetShape()
-        {
-            double D = _diameter;
-            double H = _height;
-            double F = _rule.UnitValue;
-            double t = 0.7 * D / 2;
-
-
-            List<Point3d> arcCotralPoints = new List<Point3d>() {
-                    new Point3d(t , 0, H ),
-                    new Point3d(t +4*F , 0, H ),
-                    new Point3d(t +4*F , 0, H-4*F )};
-
-            Curve arcCrvs = Curve.CreateControlPointCurve(arcCotralPoints);
-
-
-            List<Point3d> interPoints = new List<Point3d>() {
-
-                    new Point3d(t +4*F , 0, H-4*F ),
-                    new Point3d(D /2-4*F, 0, 8 * H / 9),
-                    new Point3d(D /2-2*F, 0, 7 * H / 9),
-                    new Point3d(D /2, 0, 2 * H / 3),
-                    new Point3d(D /2, 0,  H / 3),
-                    new Point3d(D /2, 0, 0) };
-
-            Curve crvPolyLine = Curve.CreateInterpolatedCurve(interPoints, 3);
-
-            List<Curve> crvsList = new List<Curve>() { arcCrvs, crvPolyLine };
-
-            Curve crvToRo = Curve.JoinCurves(crvsList)[0];
-            RevSurface revSrf = RevSurface.Create(crvToRo, new Line(Point3d.Origin, new Point3d(0, 0, 1)));
-
-            Brep zhuBrep = Brep.CreateFromRevSurface(revSrf, true, true);
-
-            return zhuBrep;
         }
     }
 }

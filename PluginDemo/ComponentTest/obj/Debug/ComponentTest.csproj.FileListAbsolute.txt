@@ -1,0 +1,6 @@
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\bin\ComponentTest.dll
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\bin\ComponentTest.pdb
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\obj\Debug\ComponentTest.csproj.CoreCompileInputs.cache
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\obj\Debug\ComponentTest.dll
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\obj\Debug\ComponentTest.pdb
+C:\Users\Computer\Desktop\code\PluginForQingDynasty\PluginDemo\ComponentTest\obj\Debug\ComponentTest.csprojAssemblyReference.cache

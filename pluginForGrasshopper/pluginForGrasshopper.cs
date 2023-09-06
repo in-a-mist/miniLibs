@@ -221,17 +221,18 @@ namespace pluginForGrasshopper
         }
     }
 
-    public class HuaKungComponent : GH_Component
+    public class FirstHuaKungComponent : GH_Component
     {
-        public HuaKungComponent()
-          : base("HuaKung", "华栱",
-              "华栱",
+        public FirstHuaKungComponent()
+          : base("HuaKung", "华栱1",
+              "华栱第一跳",
               "MiniLibs", "Primitive")
         {
         }
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddNumberParameter("Size", "S", "截面尺寸宽度", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Level", "L", "铺作层数", GH_ParamAccess.item);
             pManager.AddPointParameter("Point", "P", "点", GH_ParamAccess.item);
         }
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -248,13 +249,16 @@ namespace pluginForGrasshopper
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             double size = 0;
+            int setLevel = 4;
             Point3d position = Point3d.Unset;
             if (!DA.GetData(0, ref size)) return;
             if (size <= 0) return;
-            if (!DA.GetData(1, ref position)) return;
+            if (!DA.GetData(1, ref setLevel)) return;
+            if (setLevel < 4 || setLevel >8) return;
+            if (!DA.GetData(2, ref position)) return;
 
             var rule = new CaiFenRule(size);
-            var data = new HuaKungData(rule);
+            var data = new HuaKungData(rule,setLevel);
             var kung = new HuaKung(data);
 
             var shape = kung.GetShape();
@@ -264,8 +268,8 @@ namespace pluginForGrasshopper
             Point3d topPoint = new Point3d(position.X, position.Y, position.Z + data._rule.EnoughSize);
             DA.SetData(1, topPoint);
 
-            double numOut = data.ExtendOuter - 5 * data._rule.UnitValue;
-            double numIns = data.ExtendInner - 5 * data._rule.UnitValue;
+            double numOut = data.ExtendOuter - 0.5 * data.EndLengthForTou;
+            double numIns = data.ExtendInner - 0.5 * data.EndLengthForTou;
 
             Point3d outPoint = new Point3d(position.X, position.Y-numOut, position.Z + data._rule.SingleSize);
             Point3d insPoint = new Point3d(position.X, position.Y+numIns, position.Z + data._rule.SingleSize);
@@ -331,8 +335,8 @@ namespace pluginForGrasshopper
             Point3d topPoint = new Point3d(position.X, position.Y, position.Z + data._rule.EnoughSize);
             DA.SetData(1, topPoint);
 
-            double numOut = data.ExtendOuter - 5 * data._rule.UnitValue;
-            double numIns = data.ExtendInner - 5 * data._rule.UnitValue;
+            double numOut = data.ExtendOuter - 0.5 * data.EndLengthForTou;
+            double numIns = data.ExtendInner - 0.5 * data.EndLengthForTou;
 
             Point3d outPoint = new Point3d(position.X - numOut, position.Y, position.Z + data._rule.SingleSize);
             Point3d insPoint = new Point3d(position.X + numIns, position.Y, position.Z + data._rule.SingleSize);
@@ -397,8 +401,8 @@ namespace pluginForGrasshopper
             Point3d topPoint = new Point3d(position.X, position.Y, position.Z + data._rule.EnoughSize);
             DA.SetData(1, topPoint);
 
-            double numOut = data.ExtendOuter - 5 * data._rule.UnitValue;
-            double numIns = data.ExtendInner - 5 * data._rule.UnitValue;
+            double numOut = data.ExtendOuter - 0.5 * data.EndLengthForTou;
+            double numIns = data.ExtendInner - 0.5 * data.EndLengthForTou;
 
             Point3d outPoint = new Point3d(position.X - numOut, position.Y, position.Z + data._rule.SingleSize);
             Point3d insPoint = new Point3d(position.X + numIns, position.Y, position.Z + data._rule.SingleSize);
@@ -463,8 +467,8 @@ namespace pluginForGrasshopper
             Point3d topPoint = new Point3d(position.X, position.Y, position.Z + data._rule.EnoughSize);
             DA.SetData(1, topPoint);
 
-            double numOut = data.ExtendOuter - 5 * data._rule.UnitValue;
-            double numIns = data.ExtendInner - 5 * data._rule.UnitValue;
+            double numOut = data.ExtendOuter - 0.5 * data.EndLengthForTou;
+            double numIns = data.ExtendInner - 0.5 * data.EndLengthForTou;
 
             Point3d outPoint = new Point3d(position.X - numOut, position.Y, position.Z + data._rule.SingleSize);
             Point3d insPoint = new Point3d(position.X + numIns, position.Y, position.Z + data._rule.SingleSize);
@@ -529,8 +533,8 @@ namespace pluginForGrasshopper
             Point3d topPoint = new Point3d(position.X, position.Y, position.Z + data._rule.EnoughSize);
             DA.SetData(1, topPoint);
 
-            double numOut = data.ExtendOuter - 5 * data._rule.UnitValue;
-            double numIns = data.ExtendInner - 5 * data._rule.UnitValue;
+            double numOut = data.ExtendOuter - 0.5 * data.EndLengthForTou;
+            double numIns = data.ExtendInner - 0.5 * data.EndLengthForTou;
 
             Point3d outPoint = new Point3d(position.X - numOut, position.Y, position.Z + data._rule.SingleSize);
             Point3d insPoint = new Point3d(position.X + numIns, position.Y, position.Z + data._rule.SingleSize);

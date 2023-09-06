@@ -18,7 +18,7 @@
     }
 
     /// <summary>
-    /// 栱的属性：名称、外挑长、里挑长、总长、是否足材、卷杀高度、卷杀瓣数、卷杀总长度
+    /// 栱的属性：名称、外挑长、里挑长、总长、端头坐斗长、是否足材、卷杀高度、卷杀瓣数、卷杀总长度
     /// </summary>
     public interface IKung
     {
@@ -26,6 +26,7 @@
         double ExtendOuter { get; }
         double ExtendInner { get; }
         double FullLength { get; }
+        double EndLengthForTou { get; }
         double Width { get; }
         double Height { get; }
         bool IsEnough { get; }
@@ -113,6 +114,7 @@
         public abstract double ExtendOuter { get; }
         public abstract double ExtendInner { get; }
         public double FullLength => ExtendOuter + ExtendInner;
+        public virtual double EndLengthForTou => 10 * _rule.UnitValue;
         public double Width => _rule.WidthSize;
         public double Height => IsEnough ? _rule.EnoughSize : _rule.SingleSize;
         public abstract bool IsEnough { get; }
@@ -123,13 +125,42 @@
 
     public class HuaKungData : KungData
     {
-        public HuaKungData(ICalculatorRule rule) : base(rule)
+        private const int _extendedFlag=1;
+        private SetExtendedData _setData;
+        //public HuaKungData(ICalculatorRule rule) : base(rule) { }
+        
+
+        public HuaKungData(ICalculatorRule rule, int setLevel) : base(rule)
         {
+            _setData = new SetExtendedData(setLevel);
         }
 
         public override string Name => "宋式华栱";
-        public override double ExtendOuter => 36 * _rule.UnitValue;
-        public override double ExtendInner => 36 * _rule.UnitValue;
+        public override double ExtendOuter
+        {
+            get
+            {
+                double sum = 0;
+                for (int i = 0; i < _extendedFlag; i++)
+                {
+                    sum += _setData.OutterValue[i];
+                }
+                return sum * _rule.UnitValue + 0.5 * EndLengthForTou;
+            }
+        }
+        public override double ExtendInner
+        {
+            get
+            {
+                double sum = 0;
+                for (int i = 0; i < _extendedFlag; i++)
+                {
+                    sum += _setData.InnerValue[i];
+                }
+                return sum * _rule.UnitValue + 0.5 * EndLengthForTou;
+            }
+        }
+        public override double EndLengthForTou => 12 * _rule.UnitValue;
         public override bool IsEnough => true;
         public override double CutHeight => 9 * _rule.UnitValue;
         public override double CutAmount => 4;

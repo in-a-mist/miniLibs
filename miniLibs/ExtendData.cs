@@ -183,20 +183,20 @@ namespace miniLibs
         private int _extendAmount;
         public SetExtendedData(int setLevel)
         {
-            if (setLevel < 4) return;
+            if (setLevel < 4|| setLevel>8) return;
             _extendAmount = setLevel - 3;
         }
         public double[] OutterValue
         {
             get
             {
-                double[] outter = null;
+                double[] outter = new double[5];
                 switch (_extendAmount)
                 {
                     case 1:
                     case 2:
                     case 3:
-                        outter = new double[_extendAmount];
+                        //outter = new double[_extendAmount];
                         for (int i = 0; i < _extendAmount; i++)
                         {
                             outter[i] = 30;
@@ -204,7 +204,7 @@ namespace miniLibs
                         break;
                     case 4:
                     case 5:
-                        outter = new double[_extendAmount];
+                        //outter = new double[_extendAmount];
                         for (int i = 0; i < _extendAmount; i++)
                         {
                             outter[i] = 26;
@@ -222,16 +222,16 @@ namespace miniLibs
         {
             get
             {
-                double[] inner = null;
+                double[] inner = new double[3];
                 switch (_extendAmount)
                 {
                     case 1:
-                        inner = new double[1];
+                        //inner = new double[1];
                         inner[0] = 30;
                         break;
                     case 2:
                     case 3:
-                        inner = new double[2];
+                        //inner = new double[2];
                         for (int i = 0; i < 2; i++)
                         {
                             inner[i] = 30;
@@ -239,7 +239,7 @@ namespace miniLibs
                         break;
                     case 4:
                     case 5:
-                        inner = new double[3];
+                        //inner = new double[3];
                         for (int i = 0; i < 3; i++)
                         {
                             inner[i] = 26;

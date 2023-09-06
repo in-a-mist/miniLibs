@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculatorRule.cs" />
+    <Compile Include="Column.cs" />
     <Compile Include="ExtendData.cs" />
     <Compile Include="PrimitiveModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
